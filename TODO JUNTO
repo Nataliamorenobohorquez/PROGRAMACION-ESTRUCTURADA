@@ -1,0 +1,81 @@
+# ============================================
+# Proyecto: Sistema de Rentabilidad
+# Estudiante: Natalia Moreno
+# ============================================
+
+# ---------- FUNCIONES ----------
+
+def mostrar_bienvenida(usuario):
+    print(f"\n*** Bienvenida {usuario} al Sistema de Rentabilidad ***")
+
+
+def calcular_ganancia(ingresos, costos):
+    ganancia = ingresos - costos
+    return ganancia
+
+
+def calcular_rentabilidad(ganancia, inversion):
+    rentabilidad = (ganancia / inversion) * 100
+    return rentabilidad
+
+
+def aplicar_descuento(monto, porcentaje):
+    descuento = monto * (porcentaje / 100)
+    total = monto - descuento
+    return total
+
+
+def calcular_iva(monto):
+    iva = monto * 0.19
+    return iva
+
+
+# ---------- MENÚ PRINCIPAL ----------
+
+while True:
+
+    print("\n=================================")
+    print("     SISTEMA DE RENTABILIDAD")
+    print("=================================")
+    print("1. Saludar usuario")
+    print("2. Calcular ganancia")
+    print("3. Calcular rentabilidad")
+    print("4. Aplicar descuento")
+    print("5. Calcular IVA")
+    print("6. Salir")
+
+    opcion = input("Seleccione una opción: ")
+
+    if opcion == "1":
+        nombre = input("Ingrese su nombre: ")
+        mostrar_bienvenida(nombre)
+
+    elif opcion == "2":
+        ingresos = float(input("Ingrese ingresos totales: "))
+        costos = float(input("Ingrese costos totales: "))
+        ganancia = calcular_ganancia(ingresos, costos)
+        print(f"La ganancia total es: {ganancia}")
+
+    elif opcion == "3":
+        ganancia = float(input("Ingrese la ganancia obtenida: "))
+        inversion = float(input("Ingrese la inversión inicial: "))
+        rentabilidad = calcular_rentabilidad(ganancia, inversion)
+        print(f"La rentabilidad del negocio es: {rentabilidad}%")
+
+    elif opcion == "4":
+        monto = float(input("Ingrese el monto del producto: "))
+        porcentaje = float(input("Ingrese porcentaje de descuento: "))
+        total = aplicar_descuento(monto, porcentaje)
+        print(f"El total a pagar con descuento es: {total}")
+
+    elif opcion == "5":
+        monto = float(input("Ingrese el monto: "))
+        iva = calcular_iva(monto)
+        print(f"El IVA es: {iva}")
+
+    elif opcion == "6":
+        print("Saliendo del sistema...")
+        break
+
+    else:
+        print("ERROR: opción inválida. Intente nuevamente.")
