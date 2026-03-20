@@ -1,0 +1,29 @@
+# laboratorio_strings.py
+# Laboratorio de Tratamiento de Cadenas
+# String Treatment Laboratory
+# Unidad 2 - Programacion Estructurada
+ 
+# pedir cadena al usuario / ask user for a string
+cadena = input("Ingresa un texto / Enter a text: ")
+ 
+# aplicar upper() para convertir todo a mayusculas
+# apply upper() to convert everything to uppercase
+cadena_mayusculas = cadena.upper()
+ 
+# mostrar resultado con f-strings / show result with f-strings
+print()
+print("=" * 45)
+print(f"  {'RESULTADO / RESULT':^41}")
+print("=" * 45)
+print(f"  {'Original':<20} {cadena}")
+print(f"  {'Mayusculas / Uppercase':<20} {cadena_mayusculas}")
+print("=" * 45)
+print()
+print("Sin importar si escribes en MAYUSCULAS,")
+print("minusculas o MeZcLaDo, el sistema")
+print("siempre lo toma como MAYUSCULAS.")
+print()
+print("Regardless of whether you type in UPPERCASE,")
+print("lowercase or MiXeD, the system")
+print("always takes it as UPPERCASE.")
+print()
