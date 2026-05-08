@@ -1,0 +1,6 @@
+=== LOG DEL SISTEMA / SYSTEM LOG ===
+Linea 1: Sistema iniciado correctamente / System started successfully
+Linea 2: Base de datos cargada / Database loaded
+Linea 3: Modulos activos / Active modules: calculos, persistencia, ui
+Linea 4 (append): Nuevo registro agregado sin borrar / New record added without deleting
+Linea 5 (append): Archivo cerrado y reabierto / File closed and reopened
