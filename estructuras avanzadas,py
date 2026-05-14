@@ -1,0 +1,280 @@
+# laboratorio_estructuras_avanzadas.py
+# Estructuras Lineales Avanzadas y Combinadas
+# Advanced Linear and Combined Structures
+# Guia Practica N11 - Programacion Estructurada
+# =============================================================================
+# Temas / Topics:
+#   - Pila LIFO (Last In First Out)
+#   - Cola FIFO (First In First Out) con collections.deque
+#   - Lista Doblemente Enlazada (NodoDoble)
+#   - Estructura Combinada: Diccionario de Pilas (Matriz de Pilas)
+# =============================================================================
+
+from collections import deque  # modulo para Cola eficiente / module for efficient Queue
+
+print("=" * 58)
+print(f"  {'ESTRUCTURAS LINEALES AVANZADAS':^54}")
+print(f"  {'Advanced Linear Structures - Guia 11':^54}")
+print("=" * 58)
+
+
+# =============================================================================
+# PARTE 1: PILA LIFO / LIFO STACK
+# =============================================================================
+# LIFO = Last In First Out = Ultimo en entrar, primero en salir
+# Como una pila de platos: el ultimo que pones es el primero que tomas
+# Like a stack of plates: the last one you put is the first one you take
+# =============================================================================
+
+print("\n" + "─" * 58)
+print("  PARTE 1: PILA LIFO / LIFO STACK")
+print("─" * 58)
+
+class Pila:
+    """
+    Estructura LIFO implementada con lista de Python.
+    LIFO structure implemented with Python list.
+    """
+    def __init__(self):
+        self._datos = []   # lista interna / internal list
+
+    def push(self, elemento):
+        """Agrega al tope / Pushes to top."""
+        self._datos.append(elemento)
+        print(f"  push('{elemento}') → Tope / Top: '{self._datos[-1]}'")
+
+    def pop(self):
+        """Saca del tope (LIFO) / Pops from top (LIFO)."""
+        if not self._datos:
+            print("  pop() → Pila vacia / Empty stack")
+            return None
+        elemento = self._datos.pop()
+        tope = self._datos[-1] if self._datos else "vacía / empty"
+        print(f"  pop() → Salio / Left: '{elemento}' | Nuevo tope / New top: '{tope}'")
+        return elemento
+
+    def peek(self):
+        """Muestra tope sin sacar / Shows top without removing."""
+        return self._datos[-1] if self._datos else None
+
+    def esta_vacia(self):
+        return len(self._datos) == 0
+
+    def __str__(self):
+        return f"  Pila / Stack: {self._datos} ← tope / top"
+
+
+# demostrar pila con acciones del sistema
+# demonstrate stack with system actions
+pila_historial = Pila()
+print("\n  Registrando acciones / Logging actions:")
+pila_historial.push("Registrar_Auriculares")
+pila_historial.push("Actualizar_Precio_Mouse")
+pila_historial.push("Eliminar_Teclado")
+print(pila_historial)
+
+print("\n  Deshaciendo acciones (LIFO) / Undoing actions (LIFO):")
+pila_historial.pop()  # se deshace la ultima / undo the last
+pila_historial.pop()  # se deshace la penultima / undo the second to last
+print(pila_historial)
+
+
+# =============================================================================
+# PARTE 2: COLA FIFO / FIFO QUEUE
+# =============================================================================
+# FIFO = First In First Out = Primero en entrar, primero en salir
+# Como una fila de supermercado: el primero que llega es el primero atendido
+# Like a supermarket line: the first to arrive is the first to be served
+# =============================================================================
+
+print("\n" + "─" * 58)
+print("  PARTE 2: COLA FIFO / FIFO QUEUE")
+print("─" * 58)
+
+class Cola:
+    """
+    Estructura FIFO implementada con collections.deque.
+    FIFO structure implemented with collections.deque.
+    deque es mas eficiente que lista para quitar del inicio.
+    deque is more efficient than list for removing from the start.
+    """
+    def __init__(self):
+        self._datos = deque()  # deque importado de collections / imported from collections
+
+    def enqueue(self, elemento):
+        """Agrega al final de la cola / Adds to end of queue."""
+        self._datos.append(elemento)
+        print(f"  enqueue('{elemento}') → Cola / Queue: {list(self._datos)}")
+
+    def dequeue(self):
+        """Saca del inicio (FIFO) / Removes from start (FIFO)."""
+        if not self._datos:
+            print("  dequeue() → Cola vacia / Empty queue")
+            return None
+        elemento = self._datos.popleft()  # popleft saca el primero / removes first
+        print(f"  dequeue() → Atendido / Served: '{elemento}' | Restante / Remaining: {list(self._datos)}")
+        return elemento
+
+    def esta_vacia(self):
+        return len(self._datos) == 0
+
+    def __str__(self):
+        return f"  Cola / Queue: {list(self._datos)} → frente / front"
+
+
+# demostrar cola con pedidos
+# demonstrate queue with orders
+cola_pedidos = Cola()
+print("\n  Llegada de pedidos / Order arrivals:")
+cola_pedidos.enqueue("Pedido_001_Auriculares")
+cola_pedidos.enqueue("Pedido_002_Mouse")
+cola_pedidos.enqueue("Pedido_003_Teclado")
+
+print("\n  Procesando pedidos en orden / Processing orders in order (FIFO):")
+cola_pedidos.dequeue()  # primero en llegar, primero en salir
+cola_pedidos.dequeue()
+print(cola_pedidos)
+
+
+# =============================================================================
+# PARTE 3: LISTA DOBLEMENTE ENLAZADA / DOUBLY LINKED LIST
+# =============================================================================
+# Cada nodo apunta al SIGUIENTE y al ANTERIOR.
+# Permite navegar en ambas direcciones: adelante y atras.
+# Each node points to NEXT and PREVIOUS.
+# Allows navigation in both directions: forward and backward.
+# =============================================================================
+
+print("\n" + "─" * 58)
+print("  PARTE 3: NODO DOBLE / DOUBLE NODE")
+print("─" * 58)
+
+class NodoDoble:
+    """
+    Nodo con dos punteros: siguiente y anterior.
+    Node with two pointers: next and previous.
+    Permite navegacion bidireccional / Allows bidirectional navigation.
+    """
+    def __init__(self, dato):
+        self.dato      = dato    # informacion / information
+        self.siguiente = None    # puntero hacia adelante / forward pointer
+        self.anterior  = None    # puntero hacia atras / backward pointer
+
+
+# crear nodos / create nodes
+nodo1 = NodoDoble("Producto A")
+nodo2 = NodoDoble("Producto B")
+nodo3 = NodoDoble("Producto C")
+
+# conectar hacia adelante (siguiente) / connect forward (next)
+nodo1.siguiente = nodo2
+nodo2.siguiente = nodo3
+nodo3.siguiente = None
+
+# conectar hacia atras (anterior) / connect backward (previous)
+nodo1.anterior  = None    # el primero no tiene anterior / first has no previous
+nodo2.anterior  = nodo1
+nodo3.anterior  = nodo2
+
+print("\n  Recorrido ADELANTE / FORWARD traversal:")
+actual = nodo1
+while actual is not None:
+    sig = actual.siguiente.dato if actual.siguiente else "None"
+    ant = actual.anterior.dato  if actual.anterior  else "None"
+    print(f"  ← {ant} | [{actual.dato}] | {sig} →")
+    actual = actual.siguiente
+
+print("\n  Recorrido ATRAS / BACKWARD traversal:")
+actual = nodo3
+while actual is not None:
+    print(f"  '{actual.dato}'")
+    actual = actual.anterior
+
+
+# =============================================================================
+# PARTE 4: ESTRUCTURA COMBINADA - DICCIONARIO DE PILAS (MATRIZ DE PILAS)
+# =============================================================================
+# Combina un Diccionario + Pilas LIFO.
+# Cada usuario tiene su propia pila de historial de acciones.
+# Combines a Dictionary + LIFO Stacks.
+# Each user has their own stack of action history.
+# =============================================================================
+
+print("\n" + "─" * 58)
+print("  PARTE 4: ESTRUCTURA COMBINADA")
+print("  Diccionario de Pilas / Dictionary of Stacks")
+print("─" * 58)
+
+# Matriz de Pilas: cada clave del diccionario es una Pila LIFO
+# Stack Matrix: each dictionary key is a LIFO Stack
+historial_por_usuario = {
+    "Admin":    ["Login", "Ver_Productos", "Actualizar_Precio"],  # Pila LIFO
+    "Vendedor": ["Login", "Registrar_Venta", "Consultar_Stock"],  # Pila LIFO
+    "Auditor":  ["Login", "Generar_Reporte"]                      # Pila LIFO
+}
+
+def ver_historial(usuario):
+    """
+    Muestra el historial de un usuario.
+    Shows the history of a user.
+    """
+    if usuario in historial_por_usuario:
+        print(f"  Historial de {usuario}: {historial_por_usuario[usuario]}")
+    else:
+        print(f"  Usuario no encontrado / User not found: {usuario}")
+
+def registrar_accion(usuario, accion):
+    """
+    Registra una accion en la pila del usuario (push).
+    Registers an action in the user's stack (push).
+    """
+    if usuario not in historial_por_usuario:
+        historial_por_usuario[usuario] = []
+    historial_por_usuario[usuario].append(accion)
+    print(f"  push('{accion}') para / for {usuario}")
+
+def deshacer_accion(usuario):
+    """
+    Deshace la ultima accion del usuario (pop LIFO).
+    Undoes the last user action (pop LIFO).
+    """
+    if usuario in historial_por_usuario and historial_por_usuario[usuario]:
+        accion = historial_por_usuario[usuario].pop()
+        print(f"  pop() → Accion revertida / Action reverted: '{accion}' para / for {usuario}")
+    else:
+        print(f"  No hay acciones para deshacer / No actions to undo: {usuario}")
+
+
+print("\n  Estado inicial / Initial state:")
+for usuario in historial_por_usuario:
+    ver_historial(usuario)
+
+print("\n  Registrando nuevas acciones / Registering new actions:")
+registrar_accion("Admin",    "Eliminar_Producto_Mouse")
+registrar_accion("Vendedor", "Cerrar_Caja")
+
+print("\n  Deshaciendo ultima accion (LIFO) / Undoing last action (LIFO):")
+deshacer_accion("Admin")
+deshacer_accion("Vendedor")
+
+print("\n  Estado final / Final state:")
+for usuario in historial_por_usuario:
+    ver_historial(usuario)
+
+
+# =============================================================================
+# RESUMEN COMPARATIVO / COMPARATIVE SUMMARY
+# =============================================================================
+
+print("\n" + "=" * 58)
+print(f"  {'RESUMEN / SUMMARY':^54}")
+print("=" * 58)
+print(f"  {'Estructura / Structure':<28} {'Orden / Order':<15} {'Uso / Use'}")
+print("  " + "─" * 54)
+print(f"  {'Pila / Stack (LIFO)':<28} {'Ultimo → 1ro':<15} Historial / History")
+print(f"  {'Cola / Queue (FIFO)':<28} {'Primero → 1ro':<15} Pedidos / Orders")
+print(f"  {'Lista Doble / Doubly Linked':<28} {'Bidireccional':<15} Navegacion / Navigation")
+print(f"  {'Dict de Pilas / Dict of Stacks':<28} {'Por usuario':<15} Multi-historial")
+print("=" * 58)
+print(f"  Script ejecutado con exito / Script ran successfully")
+print("=" * 58)
