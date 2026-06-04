@@ -1,0 +1,110 @@
+# simulador_nodos.py
+# Laboratorio de Referencias - El Pointer Challenge
+# References Laboratory - The Pointer Challenge
+# Guia Practica N10 - Programacion Estructurada
+
+# =============================================================================
+# CLASE NODO / NODE CLASS
+# Un Nodo es un objeto que guarda un dato y una referencia al siguiente nodo.
+# A Node is an object that stores data and a reference to the next node.
+# =============================================================================
+
+class Nodo:
+    """
+    Clase Nodo: bloque basico de una lista enlazada.
+    Node Class: basic building block of a linked list.
+    """
+    def __init__(self, dato):
+        # dato: la informacion que almacena el nodo / data stored in the node
+        self.dato      = dato
+        # siguiente: referencia (puntero) al proximo nodo en memoria
+        # next: reference (pointer) to the next node in memory
+        self.siguiente = None   # None significa que no apunta a nadie / None means points to nobody
+
+print("=" * 55)
+print(f"  {'SIMULADOR DE NODOS / NODE SIMULATOR':^51}")
+print(f"  {'Estructuras Dinamicas / Dynamic Structures':^51}")
+print("=" * 55)
+
+# =============================================================================
+# PASO 1: CREAR TRES NODOS INDEPENDIENTES
+# STEP 1: CREATE THREE INDEPENDENT NODES
+# Cada nodo existe en una posicion distinta de la memoria RAM
+# Each node exists at a different RAM memory position
+# =============================================================================
+print("\nPASO 1 / STEP 1: Crear nodos / Create nodes")
+
+nodo_a = Nodo("Dato A - Registro Auriculares")
+nodo_b = Nodo("Dato B - Registro Teclado")
+nodo_c = Nodo("Dato C - Registro Mouse")
+
+print(f"  nodo_a creado / created: '{nodo_a.dato}'")
+print(f"  nodo_b creado / created: '{nodo_b.dato}'")
+print(f"  nodo_c creado / created: '{nodo_c.dato}'")
+print(f"  nodo_a.siguiente = {nodo_a.siguiente}  ← aun no apunta a nadie / not pointing yet")
+
+# =============================================================================
+# PASO 2: CONECTAR MANUALMENTE LOS NODOS (ENCADENAMIENTO)
+# STEP 2: MANUALLY CONNECT THE NODES (CHAINING)
+# nodo_a → nodo_b → nodo_c → None
+# =============================================================================
+print("\nPASO 2 / STEP 2: Conectar nodos / Connect nodes")
+
+# nodo_a apunta a nodo_b / nodo_a points to nodo_b
+nodo_a.siguiente = nodo_b
+# nodo_b apunta a nodo_c / nodo_b points to nodo_c
+nodo_b.siguiente = nodo_c
+# nodo_c no apunta a nadie (fin de la lista) / nodo_c points to nobody (end of list)
+nodo_c.siguiente = None
+
+print(f"  nodo_a.siguiente → '{nodo_a.siguiente.dato}'")
+print(f"  nodo_b.siguiente → '{nodo_b.siguiente.dato}'")
+print(f"  nodo_c.siguiente → {nodo_c.siguiente}  ← fin de lista / end of list")
+
+# =============================================================================
+# PASO 3: RECORRIDO MANUAL POR REFERENCIA
+# STEP 3: MANUAL TRAVERSAL BY REFERENCE
+# Acceder a nodo_c UNICAMENTE desde nodo_a usando la cadena de punteros
+# Access nodo_c ONLY from nodo_a using the pointer chain
+# =============================================================================
+print("\nPASO 3 / STEP 3: Recorrido manual / Manual traversal")
+
+# acceder al dato de nodo_c solo desde nodo_a
+# access nodo_c data only from nodo_a
+dato_b = nodo_a.siguiente.dato           # nodo_a → nodo_b
+dato_c = nodo_a.siguiente.siguiente.dato # nodo_a → nodo_b → nodo_c
+
+print(f"  nodo_a.dato                        = '{nodo_a.dato}'")
+print(f"  nodo_a.siguiente.dato              = '{dato_b}'")
+print(f"  nodo_a.siguiente.siguiente.dato    = '{dato_c}'")
+
+# recorrido con ciclo while / traversal with while loop
+print("\n  Recorrido con while / While traversal:")
+actual = nodo_a   # empezar desde la cabeza / start from the head
+posicion = 1
+while actual is not None:
+    print(f"  Posicion {posicion}: '{actual.dato}'")
+    actual   = actual.siguiente  # avanzar al siguiente / advance to next
+    posicion = posicion + 1
+
+# =============================================================================
+# PASO 4: RUPTURA DE ENLACE / LINK BREAK
+# Demostrar que si nodo_a.siguiente = None, nodo_b y nodo_c quedan
+# inaccesibles desde nodo_a (el GC los eliminara de memoria).
+# Demonstrate that if nodo_a.siguiente = None, nodo_b and nodo_c become
+# inaccessible from nodo_a (GC will remove them from memory).
+# =============================================================================
+print("\nPASO 4 / STEP 4: Ruptura de enlace / Link break")
+print(f"  Antes / Before: nodo_a.siguiente = '{nodo_a.siguiente.dato}'")
+
+nodo_a.siguiente = None  # romper el enlace / break the link
+
+print(f"  Despues / After: nodo_a.siguiente = {nodo_a.siguiente}")
+print("  nodo_b y nodo_c ya no son accesibles desde nodo_a.")
+print("  nodo_b and nodo_c are no longer accessible from nodo_a.")
+print("  El Garbage Collector liberara esa memoria / GC will free that memory.")
+
+print()
+print("=" * 55)
+print(f"  Script ejecutado con exito / Script ran successfully")
+print("=" * 55)
